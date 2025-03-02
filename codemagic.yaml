@@ -7,6 +7,13 @@ workflows:
       node: 14
       java: 8 
     scripts:
+      - name: Install Java 8
+        script: |
+          echo "Installing Java 8..."
+          sudo apt-get update
+          sudo apt-get install -y openjdk-8-jdk
+          export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+          export PATH=$JAVA_HOME/bin:$PATH
       - name: Set up environment
         script: |
           echo "Installing dependencies..."
