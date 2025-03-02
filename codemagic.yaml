@@ -7,7 +7,7 @@ workflows:
       - name: Set up environment
         script: |
           echo "Installing dependencies..."
-          npm install
+          npm install --legacy-peer-deps
       - name: Build Android (Unsigned)
         script: |
           echo "Building unsigned Android app..."
