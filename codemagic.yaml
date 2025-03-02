@@ -3,20 +3,29 @@ workflows:
     name: React Native Android Unsigned Build
     max_build_duration: 120
     instance_type: mac_mini_m2
+    environment:
+      node: 14
+      java: 8 
     scripts:
       - name: Set up environment
         script: |
           echo "Installing dependencies..."
           npm install --legacy-peer-deps
-      - name: Install Java 11
+      - name: Verify Node and Java Versions
         script: |
-          echo "Installing Java 11..."
-          brew install --cask temurin11
-          export JAVA_HOME=/Library/Java/JavaVirtualMachines/temurin-11.jdk/Contents/Home
+          echo "Checking Node version..."
+          node -v
+          echo "Checking Java version..."
+          java -version
       - name: Generate Android directory (if missing)
         script: |
           echo "Generating Android directory..."
           npx expo prebuild --platform android
+      - name: Clean Gradle Cache
+        script: |
+          echo "Cleaning Gradle cache..."
+          cd android
+          ./gradlew clean
       - name: Build Android (Unsigned)
         script: |
           echo "Building unsigned Android app..."
