@@ -1,5 +1,21 @@
 workflows:
-    build-ios-workflow:
-        name: Build iOS
-        max_build_duration: 120
-        instance_type: mac_mini_m2
+  react-native-android-unsigned:
+    name: React Native Android Unsigned Build
+    max_build_duration: 120
+    instance_type: mac_mini_m2
+    scripts:
+      - name: Set up environment
+        script: |
+          echo "Installing dependencies..."
+          npm install
+      - name: Build Android (Unsigned)
+        script: |
+          echo "Building unsigned Android app..."
+          cd android
+          ./gradlew assembleRelease -x bundleReleaseJsAndAssets
+    artifacts:
+      - android/app/build/outputs/apk/release/app-release-unsigned.apk
+    publishing:
+      email:
+        recipients:
+          - primapwd@gmail.com
